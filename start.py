@@ -2,9 +2,12 @@ import json
 from openai import OpenAI
 from tenacity import retry, wait_random_exponential, stop_after_attempt
 from termcolor import colored
+import config
 
-GPT_MODEL = "gpt-3.5-turbo-0613"
-client = OpenAI(api_key='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')
+openai_api_key = config.OPENAI_API_KEY
+llm_model = config.LLM_MODEL
+GPT_MODEL = llm_model
+client = OpenAI(api_key=openai_api_key)
 tools = [
     {
         "type": "function",
