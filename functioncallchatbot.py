@@ -201,12 +201,18 @@ if prompt := st.chat_input("Message QA Chatbot..."):
     chat_response = chat_completion_request(
         st.session_state.messages, tools=tools
     )
-
     assistant_message = chat_response.choices[0].message
     if assistant_message.tool_calls:
         assistant_message.content = str(assistant_message.tool_calls[0].function)
-
-    message_placeholder.markdown(assistant_message.content)
+    assistant_response = assistant_message.content
+    
+    for item in assistant_response.split():
+        full_response += item + " "
+        time.sleep(0.05)
+        # Add a blinking cursor to simulate typing
+        message_placeholder.markdown(full_response + "▌")
+    
+    message_placeholder.markdown(assistant_response)
 
     # Add assistant response to chat history
     st.session_state.messages.append(
